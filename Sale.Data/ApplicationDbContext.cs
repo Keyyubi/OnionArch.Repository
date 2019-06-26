@@ -20,7 +20,8 @@ namespace Sale.Data
 
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {
-
+            // Some changes can be applied in here before creating tables.
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

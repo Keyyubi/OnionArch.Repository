@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.Data.Model", "Sale.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.Data", "Sale.Data\Sale.Data.csproj", "{77508F52-870B-4F80-BC21-21469D62D2F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.Service", "Sale.Service\Sale.Service.csproj", "{6196582C-A0A5-4B1C-82B5-E587F07827AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +21,9 @@ Global
 		{77508F52-870B-4F80-BC21-21469D62D2F1}.Debug|x86.Build.0 = Debug|Any CPU
 		{77508F52-870B-4F80-BC21-21469D62D2F1}.Release|x86.ActiveCfg = Release|Any CPU
 		{77508F52-870B-4F80-BC21-21469D62D2F1}.Release|x86.Build.0 = Release|Any CPU
+		{6196582C-A0A5-4B1C-82B5-E587F07827AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6196582C-A0A5-4B1C-82B5-E587F07827AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{6196582C-A0A5-4B1C-82B5-E587F07827AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{6196582C-A0A5-4B1C-82B5-E587F07827AD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
