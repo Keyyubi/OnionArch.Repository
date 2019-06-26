@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.Data.Model", "Sale.Data.Model\Sale.Data.Model.csproj", "{BE494E6F-3A0C-49D2-B934-6CFA50E78F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.Data", "Sale.Data\Sale.Data.csproj", "{77508F52-870B-4F80-BC21-21469D62D2F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE494E6F-3A0C-49D2-B934-6CFA50E78F4E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE494E6F-3A0C-49D2-B934-6CFA50E78F4E}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE494E6F-3A0C-49D2-B934-6CFA50E78F4E}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE494E6F-3A0C-49D2-B934-6CFA50E78F4E}.Release|x86.Build.0 = Release|Any CPU
+		{77508F52-870B-4F80-BC21-21469D62D2F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77508F52-870B-4F80-BC21-21469D62D2F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{77508F52-870B-4F80-BC21-21469D62D2F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{77508F52-870B-4F80-BC21-21469D62D2F1}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
