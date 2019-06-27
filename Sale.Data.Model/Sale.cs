@@ -6,7 +6,7 @@ namespace Sale.Data.Model
         public Sale()
         {
         }
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         public string UserFullname { get; set; }
         public decimal TotalPrice { get; set; }
         public PaymentTypes PaymentType { get; set; }
