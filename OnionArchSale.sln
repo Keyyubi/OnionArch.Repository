@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sale.Data", "Sale.Data\Sale
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sale.Service", "Sale.Service\Sale.Service.csproj", "{6196582C-A0A5-4B1C-82B5-E587F07827AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale.WebApp", "Sale.WebApp\Sale.WebApp.csproj", "{494D13F0-0920-448B-BF02-CA30A65560C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sale.WebApp", "Sale.WebApp\Sale.WebApp.csproj", "{494D13F0-0920-448B-BF02-CA30A65560C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

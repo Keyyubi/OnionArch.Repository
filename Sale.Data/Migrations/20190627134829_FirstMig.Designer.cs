@@ -9,8 +9,8 @@ using Sale.Data;
 namespace Sale.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190627124255_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190627134829_FirstMig")]
+    partial class FirstMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,0 +1,64 @@
+@model Product
+
+@{
+    ViewData["Title"] = "Ürün Güncelleme";
+}
+
+<div class="panel panel-default product-panel">
+  <div class="panel-heading">
+    <h4>
+      @ViewData["Title"]
+    </h4>
+  </div>
+</div>
+<form asp-action="UpdateProduct" method="POST">
+    <input hidden readonly asp-for="ID">
+
+    <!-- Product Name & Active -->
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label">Adı</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Ürün adı">
+        </div>
+        <label asp-for="Active" class="col-sm-2 col-form-label">Yayında</label>
+        <div class="col-sm-2">
+            <input type="checkbox" class="form-control" id="Active" asp-for="Active">
+        </div>
+    </div>
+
+    <!-- Product Description -->
+    <div class="form-group row">
+        <label asp-for="Description" class="col-sm-2 col-form-label">Açıklaması</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="Description" asp-for="Description" placeholder="Ürün Açıklaması">
+        </div>
+    </div>
+
+    <!-- Product Stock & Price -->
+    <div class="form-group row">
+        <label asp-for="Stock" class="col-sm-2 col-form-label">Stok Adedi</label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control" id="Stock" asp-for="Stock" placeholder="0">
+        </div>
+        <label asp-for="Price" class="col-sm-2 col-form-label">Fiyatı (&#8378;)</label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control" id="Price" asp-for="Price" placeholder="5,99">
+        </div>
+    </div>
+
+    <!-- Product Category -->
+    <div class="form-group row">
+        <label asp-for="Category" class="col-sm-2 col-form-label">Kategorisi</label>
+        <div class="col-sm-4">
+            <select class="form-control form-control" asp-for="Category" asp-items="Html.GetEnumSelectList<Categories>()" >
+                <option selected="selected" value="">Kategori Seçiniz..</option>
+            </select>
+        </div>
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary col-6" asp-for="">Güncelle</button>
+            <a class="btn btn-primary col-6" asp-area="" asp-controller="Product" asp-action="Index">İptal</a>
+            <!-- <button type="submit" class="btn btn-primary col-12">İptal</button> -->
+        </div>
+    </div>
+</form>

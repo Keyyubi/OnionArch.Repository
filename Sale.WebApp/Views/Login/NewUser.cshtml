@@ -1,0 +1,23 @@
+@model User
+
+<form asp-action="AddUser">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label asp-for="Username">Kullıcı Adı</label>
+      <input type="text" class="form-control" id="Username" name="Username" asp-for="Username" placeholder="Dreamer">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="Password">Şifre</label>
+      <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" placeholder="Şifre">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="Fullname">İsim Soyisim</label>
+    <input type="text" class="form-control" id="Fullname" name="Fullname" asp-for="Fullname" placeholder="Dr.Smith">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Telefon Numarası</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="+90 531 234 56 78">
+  </div>
+  <button type="submit" class="btn btn-primary">Kullanıcı Oluştur</button>
+</form>

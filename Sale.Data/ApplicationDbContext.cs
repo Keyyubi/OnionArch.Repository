@@ -6,10 +6,10 @@ namespace Sale.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        const string conn = "DataSource=app.db";
+        //const string conn = "DataSource=app.db";
 
-        public ApplicationDbContext()
-            : base()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
         }
 
@@ -20,10 +20,10 @@ namespace Sale.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite(conn);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite(conn);
+        //}
 
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {

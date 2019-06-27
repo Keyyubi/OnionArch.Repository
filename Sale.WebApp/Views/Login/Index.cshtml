@@ -1,0 +1,28 @@
+@model User
+
+<div class="container d-flex justify-content-center">
+    <div class="col-8">
+        <form asp-action="Login">
+            <div class="form-group row">
+                <label for="Username" class="col-sm-4 col-form-label">Kullanıcı Adı</label>
+                <div class="col-sm-8">
+                <input type="text" class="form-control" id="Username" name="Username" asp-for="Username" placeholder="Kullanıcı Adı">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Password" class="col-sm-4 col-form-label">Şifre</label>
+                <div class="col-sm-8">
+                <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" placeholder="Şifre">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary col-sm-12">Giriş Yap</button>
+                </div>
+            </div>
+        </form>
+        <span class="badge badge-pill badge-danger">@ViewData["ErrorMsg"]</span>
+    </div>
+</div>

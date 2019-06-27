@@ -1,8 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model ProductViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    ViewData["Title"] = "Anasayfa";
+}
+<style>
+    
+.prd-card-img {
+  transform: scale(0.7);
+  background-color: #f7f7f7;
+  border-radius: 50%;
+}
+.card img{
+    max-width:100%;
+    height:auto;
+    object-fit: none;
+}
+.chart {
+  position: absolute;
+  right: 0;
+  width: 20vw;
+  height: 80vh;
+  background-color: #f7f7f7;
+  border:1px solid #ccc;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow-y: auto;
+}
+.chart-header {
+    justify-content: center;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+
+}
+</style>
+
+<div class="container-fluid">
+    <div class="row d-flex mb-4 chart-header">  
+        <h2>@ViewData["Title"]</h2>
+        <span class="text-danger" style="position: absolute; right: 5%;">@ViewData["ErrorMsg"]</span>
+        <span class="text-success" style="position: absolute; right: 5%;">@ViewData["SuccessInfo"]</span>
+    </div>
+    <div class="row d-flex">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top prd-card-img" width="300px" src="~/lib/img/box.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <span class="card-text">@item.Description</span>
+                        <br>
+                        <small>Stok:</small> <small>@item.Stock</small>
+                        <form asp-action="AddProductToChart" asp-route-pId="@item.ID" method="POST">
+                            <div class="form-group row">
+                                <label for="Amount" class="col-sm-4 col-form-label">Adet</label>
+                                <div class="col-sm-4">
+                                <input type="number" class="form-control" id="Amount" name="Amount" placeholder="0" min="1" max="@item.Stock">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-success btn-sm">Sepete Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
 </div>
