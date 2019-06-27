@@ -19,7 +19,7 @@ namespace CrazySale.Controllers
             _productService = productService;
         }
 
-        // GET: api/productapi/5a34-212e
+        /* GET: api/productapi/5a34-212e
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(string id)
         {
@@ -57,6 +57,8 @@ namespace CrazySale.Controllers
             
             return Ok("Ürün oluşturma başarılı.");
         }
+
+        */
 
     }
 }

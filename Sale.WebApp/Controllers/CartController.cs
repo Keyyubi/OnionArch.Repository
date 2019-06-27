@@ -13,30 +13,48 @@ namespace CrazySale.Controllers
     public class CartController : Controller
     {
         private readonly IProductService _productService;
-        private readonly ICartService _CartService;
+        private readonly ICartService _cartService;
+        private readonly ICartProductService _cartProductService;
         private readonly IUserService _userService;
-        public CartController(IProductService productService, ICartService CartService, IUserService userService)
+
+        public CartController(IProductService productService, ICartService cartService, IUserService userService, ICartProductService cartProductService)
         {
             _productService = productService;
-            _CartService = CartService;
+            _cartService = cartService;
             _userService = userService;
+            _cartProductService = cartProductService;
         }
-        public async Task<IActionResult> Index(string msg = null, string scsMsg = null)
+        public IActionResult Index(string msg = null, string scsMsg = null)
         {
-            //if(!_userService.IsAuthenticate())
-            //    return RedirectToAction("Index", "Login", new { msg="Giriş yapmalısınız."});
+            if (_userService.CurrentUser() != null && !_userService.CurrentUser().IsAuthenticate)
+                return RedirectToAction("Index", "Login", new { msg = "Giriş yapmalısınız." });
 
-            //ViewData["ErrorMsg"] = msg;
-            //ViewData["SuccessInfo"] = scsMsg;
-            //var model = await _CartService.GetCartProductsAsync();
+            ViewData["ErrorMsg"] = msg;
+            ViewData["SuccessInfo"] = scsMsg;
+            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart().Id);
 
-            //if(model == null || model.Products.Count == 0)
-            //    return RedirectToAction("Index", "Home", new { msg="Sepetinizde hiç ürün yok."});
+            if(model == null || model.LongCount<CartProduct>() == 0)
+                return RedirectToAction("Index", "Home", new { msg="Sepetinizde hiç ürün yok."});
+            else
+            {
+                CartViewModel cvm = new CartViewModel();
+                cvm.ProductAmountsOnCart = new List<int>();
+                cvm.Products = new List<Product>();
+                cvm.TotalPrice = 0;
+
+                foreach (var item in model)
+                {
+                    Product p = _productService.Get(x => x.Id == item.ProductId);
+                    cvm.TotalPrice += p.Price * item.OnCartAmount;
+                    cvm.ProductAmountsOnCart.Add(item.OnCartAmount);
+                    cvm.Products.Add(p);
+                }
+            }
 
             return View();//model);
         }
         
-        public async Task<IActionResult> DeleteFromCart(Guid pId)
+        public IActionResult DeleteFromCart(Guid pId)
         {
             //var result = await _CartService.DeleteProductFromCart(pId);
 
@@ -48,7 +66,7 @@ namespace CrazySale.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CompleteSale(decimal Total)
+        public IActionResult CompleteSale(decimal Total)
         {
             //var result = await _CartService.CompleteShopping(Total);
             //if(result)

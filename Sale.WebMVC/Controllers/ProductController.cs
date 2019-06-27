@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sale.Service;
-using Sale.WebApp.Models;
+using Sale.WebMVC.Models;
 
 namespace CrazySale
 {

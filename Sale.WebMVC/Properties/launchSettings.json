@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:55390",
-      "sslPort": 44324
+      "applicationUrl": "http://localhost:10665",
+      "sslPort": 44314
     }
   },
   "profiles": {
@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Sale.WebApp": {
+    "Sale.WebMVC": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

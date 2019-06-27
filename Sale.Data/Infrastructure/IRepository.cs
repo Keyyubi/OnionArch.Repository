@@ -11,8 +11,8 @@ namespace Sale.Data.Infrastructure
 
         T Get(Expression<Func<T, bool>> predicate);
         T GetById(long id);
-        IEnumerable<T> GetAll(params string[] navigations);
-        IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> Find(Expression<Func<T, bool>> where);
 
         void Update(T entity);
 

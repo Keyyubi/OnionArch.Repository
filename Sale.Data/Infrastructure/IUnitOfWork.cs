@@ -5,7 +5,7 @@ namespace Sale.Data.Infrastructure
 {
     public interface IUnitOfWork : IDisposable
     {
-        DbContext Context { get; }
+        ApplicationDbContext Context { get; }
         int Commit();
     }
 }

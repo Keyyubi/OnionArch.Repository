@@ -9,18 +9,20 @@ namespace Sale.Service
 {
     public interface ICartService : IServiceBase<Cart>
     {
-        Cart GetUserCart(long UserId);
+        Cart GetUserCart();
     }
 
     public class CartService : ICartService
     {
         private IRepository<Cart> _cartRepo;
         private IUnitOfWork _unitOfWork;
+        private IUserService _userService;
 
-        public CartService(IRepository<Cart> cartRepo, IUnitOfWork unitOfWork)
+        public CartService(IRepository<Cart> cartRepo, IUnitOfWork unitOfWork, IUserService userService)
         {
             _cartRepo = cartRepo;
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         public void Add(Cart cart)
@@ -54,8 +56,13 @@ namespace Sale.Service
         }
 
 
-        public Cart GetUserCart(long UserId)
+        public Cart GetUserCart()
         {
+            long UserId = _userService.CurrentUserId();
+            
+            if (UserId == -1)
+                return null;
+
             var obj = _cartRepo.Get(x => x.UserId == UserId);
 
             if (obj == null)

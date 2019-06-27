@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Sale.Data.Infrastructure;
 using Sale.Data.Model;
@@ -8,7 +9,10 @@ namespace Sale.Service
 {
     public interface IProductService : IServiceBase<Product>
     {
+        Product Get(Expression<Func<Product, bool>> where);
         IEnumerable<Product> GetOnSaleProducts();
+        IEnumerable<Product> GetAll();
+
     }
 
     public class ProductService : IProductService
@@ -55,12 +59,17 @@ namespace Sale.Service
         public IEnumerable<Product> GetOnSaleProducts()
         {
             // ?? Should this query be in Repository layer?
-            return _productRepo.GetMany(x => x.Active == true);
+            return _productRepo.Find(x => x.Active == true);
         }
 
         public int SaveChanges()
         {
             return _unitOfWork.Commit();
+        }
+
+        public Product Get(Expression<Func<Product, bool>> where)
+        {
+            return _productRepo.Get(where);
         }
     }
 }

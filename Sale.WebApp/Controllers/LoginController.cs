@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sale.Data.Model;
 using Sale.Service;
@@ -13,11 +9,11 @@ namespace CrazySale.Controllers
     public class LoginController : Controller
     {
         private readonly IUserService _userService;
+
         public LoginController(IUserService userService)
         {
             _userService = userService;
         }
-
 
         public IActionResult Index(string msg = null)
         {
@@ -25,17 +21,17 @@ namespace CrazySale.Controllers
             return View(new User());
         }
 
-        public IActionResult Login()
+        public IActionResult Login(User u)
         {
-            //if(string.IsNullOrEmpty(u.Username) || string.IsNullOrEmpty(u.Password))
-            //    return RedirectToAction("Index",new{msg="Kullanıcı Adı veya Şifre girmediniz."});
-            
-            
-            //var result = _userService.Login(u);
-            //if (result)
-            //    return RedirectToAction("Index", "Home");
-            
-            return View();
+            if (string.IsNullOrEmpty(u.Username) || string.IsNullOrEmpty(u.Password))
+                return RedirectToAction("Index", new { msg = "Kullanıcı Adı veya Şifre girmediniz." });
+
+
+            var result = _userService.Login(u);
+            if (result)
+                return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("Index", new { msg = "Kullanıcı Adı veya Şifre hatalı." });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -44,22 +40,18 @@ namespace CrazySale.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult NewUser(User u)
+        public IActionResult NewUser()
         {
-            return View();
+            return View(new User());
         }
 
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(User u)
         {
-            //if(u == null || string.IsNullOrEmpty(u.Username) || string.IsNullOrEmpty(u.Password))
-            //    return RedirectToAction("Index",new{msg="Kullanıcı Adı veya Şifre girmediniz."});
+            if (u == null || string.IsNullOrEmpty(u.Username) || string.IsNullOrEmpty(u.Password))
+                return RedirectToAction("Index", new { msg = "Kullanıcı Adı veya Şifre girmediniz." });
 
-            //if(_userService.CreateUser(u))
-            //    return RedirectToAction("Index", new{msg="Kullanıcı Oluşturuldu."});
-
-            //return RedirectToAction("Index",new{msg="Bir hata yaklaşıyor."});
-
-            return View();
+            _userService.Add(u);
+            return RedirectToAction("Index", new { msg = "Kullanıcı Oluşturuldu." });
         }
     }
 }
