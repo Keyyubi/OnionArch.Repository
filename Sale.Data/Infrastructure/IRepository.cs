@@ -17,6 +17,7 @@ namespace Sale.Data.Infrastructure
         void Update(T entity);
 
         void Delete(T entity);
+        void Delete(long id);
         void Delete(Expression<Func<T, bool>> where);
     }
 }

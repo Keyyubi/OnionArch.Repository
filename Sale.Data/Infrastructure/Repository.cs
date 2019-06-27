@@ -71,7 +71,10 @@ namespace Sale.Data.Infrastructure
             _unitOfWork.Context.Set<TEntity>().RemoveRange(objects);
         }
 
-        
-        
+        public void Delete(long id)
+        {
+            TEntity obj = GetById(id);
+            _unitOfWork.Context.Set<TEntity>().Remove(obj);
+        }
     }
 }
