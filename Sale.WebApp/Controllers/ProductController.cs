@@ -25,8 +25,8 @@ namespace Sale.WebApp
         }
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
-            //if(!_userService.CurrentUser().IsAuthenticate)
-            //    return RedirectToAction("Index", "Login", new { msg="Giriş yapmalısınız."});
+            if (UserService.CurrentUser == null || !UserService.CurrentUser.IsAuthenticate)
+                return RedirectToAction("Index", "Login", new { msg = "Giriş yapmalısınız." });
 
             // Creates some categories for testing if there are no categories those defined earlier.
             if (_categoryService.GetAll().Count() == 0)
@@ -43,60 +43,63 @@ namespace Sale.WebApp
             ViewData["SuccessInfo"] = scsMsg;
 
             var products = _productService.GetAll();
-            var categories = _categoryService.GetAll();
-            var model = new ProductViewModel() { Products = products, Categories = categories };
+
+            ViewBag.Categories = _categoryService.GetAll();
+
+            var model = new ProductViewModel() { Products = products};
             return View(model);
         }
 
         // Prevents the Cross-Site Request Forgery (CSRF)
         [ValidateAntiForgeryToken]
-        public IActionResult AddProduct(AddProductPartial newProduct)
+        public IActionResult AddProduct(Product newProduct)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
-            _productService.Add(newProduct.product);
+            _productService.Add(newProduct);
             if (_productService.SaveChanges() == 0)
                 return RedirectToAction("Index", new { msg = "Ürün eklenemedi" });
 
             return RedirectToAction("Index", new { scsMsg = "Ürün başarıyla eklendi" });
         }
 
-        /*
+        
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProduct(Product p)
+        public IActionResult UpdateProduct(Product p)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
-            var success = await _productService.UpdateProduct(p);
+            _productService.Update(p);
 
-            if (!success)
-                return BadRequest("Ürün silinemedi.");
-            
-            return RedirectToAction("Index");
-        }
-
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteProduct(Guid pId)
-        {
-            if (!ModelState.IsValid)
-                return RedirectToAction("Index");
-
-            var success = await _productService.DeleteProductAsync(pId);
-
-            if (!success)
+            if (_productService.SaveChanges() == 0)
                 return BadRequest("Ürün silinemedi.");
             
             return RedirectToAction("Index");
         }
         
-        public async Task<IActionResult> RouteUpdateProduct(Guid pId)
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteProduct(long pId)
         {
-            var model = await _productService.GetProduct(pId);
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+
+            _productService.Delete(pId);
+
+            if (_productService.SaveChanges() == 0)
+                return BadRequest("Ürün silinemedi.");
+            
+            return RedirectToAction("Index");
+        }
+        
+        public IActionResult RouteUpdateProduct(long pId)
+        {
+            var model = _productService.GetById(pId);
+            ViewBag.Categories = _categoryService.GetAll();
             return View("UpdateProduct",model);
         }
-
+        /*
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProductToChart(int Amount, Guid pId)
         {
@@ -108,6 +111,7 @@ namespace Sale.WebApp
                 return RedirectToAction("Index", new { scsMsg="Ürün başarılı bir şekilde sepete eklendi."});
             
             return RedirectToAction("Index", new { scsMsg="Ürün eklenirken bir hata oluştu."});
-        }*/
+        }
+        */
     }
 }

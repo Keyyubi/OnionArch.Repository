@@ -55,8 +55,9 @@ namespace Sale.Data.Infrastructure
         // Update
         public void Update(TEntity entity)
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            Table.Attach(entity);
+            Context.Update(entity);
+            //Context.Entry(entity).State = EntityState.Modified;
+            //Table.Attach(entity);
         }
 
 

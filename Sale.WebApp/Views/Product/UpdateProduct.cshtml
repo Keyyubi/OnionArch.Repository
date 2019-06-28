@@ -50,15 +50,18 @@
     <div class="form-group row">
         <label asp-for="CategoryId" class="col-sm-2 col-form-label">Kategorisi</label>
         <div class="col-sm-4">
-            <select class="form-control form-control" asp-for="CategoryId"> @*asp-items="Html.GetEnumSelectList<Categories>()" >*@
+            <select class="form-control form-control" asp-for="CategoryId">
                 <option selected="selected" value="">Kategori Seçiniz..</option>
+                @foreach (Category item in ViewBag.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
         </div>
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-4">
             <button type="submit" class="btn btn-primary col-6" asp-for="">Güncelle</button>
             <a class="btn btn-primary col-6" asp-area="" asp-controller="Product" asp-action="Index">İptal</a>
-            <!-- <button type="submit" class="btn btn-primary col-12">İptal</button> -->
         </div>
     </div>
 </form>

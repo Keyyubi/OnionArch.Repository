@@ -9,15 +9,15 @@ namespace Sale.Service
     public interface IUserService : IServiceBase<User>
     {
         bool Login(User user);
-        User CurrentUser();
-        long CurrentUserId();
+        //User CurrentUser();
+        //long CurrentUserId();
         bool LogOut(User user);
     }
     public class UserService : IUserService
     {
         private IRepository<User> _userRepository;
         private IUnitOfWork _unitOfWork;
-        private static User _currentUser { get; set; }
+        public static User CurrentUser { get; set; }
 
         public UserService(IRepository<User> userRepository, IUnitOfWork unitOfWork)
         {
@@ -29,10 +29,10 @@ namespace Sale.Service
             _userRepository.Add(entity);
         }
 
-        public User CurrentUser()
-        {
-            return _currentUser;
-        }
+        //public User CurrentUser()
+        //{
+        //    return _currentUser;
+        //}
 
         public void Delete(User entity)
         {
@@ -56,8 +56,13 @@ namespace Sale.Service
             {
                 check.IsAuthenticate = true;
                 _userRepository.Update(check);
-                _currentUser = check;
-                return true;
+                if (_unitOfWork.Commit() != 0)
+                {
+                    CurrentUser = check;
+                    return true;
+                }
+                else
+                    return false;
             }
             else
                 return false;
@@ -78,9 +83,9 @@ namespace Sale.Service
             _userRepository.Update(entity);
         }
 
-        public long CurrentUserId()
-        {
-            return _currentUser != null ? _currentUser.Id : -1;
-        }
+        //public long CurrentUserId()
+        //{
+        //    return _currentUser != null ? _currentUser.Id : -1;
+        //}
     }
 }

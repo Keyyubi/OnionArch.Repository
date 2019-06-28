@@ -25,7 +25,7 @@ namespace Sale.WebApp.Controllers
 
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
-            if (_userService.CurrentUser() != null && !_userService.CurrentUser().IsAuthenticate)
+            if (UserService.CurrentUser == null || !UserService.CurrentUser.IsAuthenticate)
                 return RedirectToAction("Index", "Login", new { msg = "Giriş yapmalısınız." });
 
             ViewData["ErrorMsg"] = msg;
@@ -41,8 +41,8 @@ namespace Sale.WebApp.Controllers
                 return RedirectToAction("Index");
 
             CartProduct crp = new CartProduct();
-            var UserId = _userService.CurrentUserId();
-            crp.CartId = _cartService.GetUserCart(UserId).Id;
+            //long UserId = _userService.CurrentUserId();
+            crp.CartId = _cartService.GetUserCart(UserService.CurrentUser.Id).Id;
             crp.ProductId = pId;
             crp.OnCartAmount = Amount;
 

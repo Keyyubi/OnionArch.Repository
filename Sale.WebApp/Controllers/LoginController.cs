@@ -51,7 +51,10 @@ namespace Sale.WebApp.Controllers
                 return RedirectToAction("Index", new { msg = "Kullanıcı Adı veya Şifre girmediniz." });
 
             _userService.Add(u);
-            return RedirectToAction("Index", new { msg = "Kullanıcı Oluşturuldu." });
+            if(_userService.SaveChanges() != 0)
+                return RedirectToAction("Index", new { msg = "Kullanıcı Oluşturuldu." });
+            else
+                return RedirectToAction("Index", new { msg = "Bir hata oluştu." });
         }
     }
 }

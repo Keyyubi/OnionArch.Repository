@@ -26,13 +26,12 @@ namespace Sale.WebApp.Controllers
         }
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
-            if (_userService.CurrentUser() != null && !_userService.CurrentUser().IsAuthenticate)
+            if (UserService.CurrentUser == null || !UserService.CurrentUser.IsAuthenticate)
                 return RedirectToAction("Index", "Login", new { msg = "Giriş yapmalısınız." });
 
             ViewData["ErrorMsg"] = msg;
             ViewData["SuccessInfo"] = scsMsg;
-            long UserId = _userService.CurrentUserId();
-            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart(UserId).Id);
+            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart(UserService.CurrentUser.Id).Id);
 
             if(model == null || model.LongCount<CartProduct>() == 0)
                 return RedirectToAction("Index", "Home", new { msg="Sepetinizde hiç ürün yok."});

@@ -37,7 +37,7 @@
               <td>@item.Stock</td>
               <td>@item.CategoryId</td>
               <td>
-                <input type="checkbox" value="@item.Active" disabled class="done-checkbox">
+                <input type="checkbox" checked="@item.Active" disabled class="done-checkbox">
               </td>
               <td>
                 <button 
@@ -73,7 +73,7 @@
       <h5>Yeni Ürün Ekle</h5>
     </div>
     <div class="card-body">
-      @await Html.PartialAsync("AddProductPartial", new AddProductPartial { product = new Product(), categories = Model.Categories }); 
+      @await Html.PartialAsync("AddProductPartial", new Product())
     </div>
   </div>
 </div>
