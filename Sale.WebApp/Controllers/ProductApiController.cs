@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Sale.Service;
 using Sale.Data.Model;
 
-namespace CrazySale.Controllers
+namespace Sale.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -39,14 +39,15 @@ namespace Sale.WebApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<DbContext, ApplicationDbContext>();
+
             // Injections
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<ICartService, CartService>();
-            services.AddTransient<ICartProductService, CartProductService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICartProductService, CartProductService>();
             services.AddTransient<ISaleService, SaleService>();
 
         }

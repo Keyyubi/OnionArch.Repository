@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Sale.Data.Builders;
 using Sale.Data.Model;
 
 namespace Sale.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        //const string conn = "DataSource=app.db";
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -20,15 +19,13 @@ namespace Sale.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite(conn);
-        //}
-
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {
             // Some changes can be applied in here before creating tables.
             base.OnModelCreating(modelBuilder);
+            new BaseBuilder(modelBuilder.Entity<BaseEntity>());
+            modelBuilder.Entity<BaseEntity>().Property(x => x.AddedDate).HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<BaseEntity>().Property(x => x.ModifiedDate).HasDefaultValue(DateTime.Now);
         }
     }
 }

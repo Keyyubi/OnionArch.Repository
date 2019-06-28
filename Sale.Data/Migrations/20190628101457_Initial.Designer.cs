@@ -9,8 +9,8 @@ using Sale.Data;
 namespace Sale.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190627134829_FirstMig")]
-    partial class FirstMig
+    [Migration("20190628101457_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,26 +18,31 @@ namespace Sale.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
-            modelBuilder.Entity("Sale.Data.Model.Cart", b =>
+            modelBuilder.Entity("Sale.Data.Model.BaseEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AddedBy");
 
-                    b.Property<DateTime>("AddedDate");
+                    b.Property<DateTime>("AddedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2019, 6, 28, 13, 14, 57, 222, DateTimeKind.Local).AddTicks(9440));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<long?>("SaleId");
-
-                    b.Property<long>("UserId");
+                    b.Property<DateTime>("ModifiedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2019, 6, 28, 13, 14, 57, 224, DateTimeKind.Local).AddTicks(4885));
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("BaseEntity");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseEntity");
                 });
 
             modelBuilder.Entity("Sale.Data.Model.CartProduct", b =>
@@ -56,44 +61,35 @@ namespace Sale.Data.Migrations
                     b.ToTable("CartProducts");
                 });
 
+            modelBuilder.Entity("Sale.Data.Model.Cart", b =>
+                {
+                    b.HasBaseType("Sale.Data.Model.BaseEntity");
+
+                    b.Property<long?>("SaleId");
+
+                    b.Property<long>("UserId");
+
+                    b.HasDiscriminator().HasValue("Cart");
+                });
+
             modelBuilder.Entity("Sale.Data.Model.Category", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
+                    b.HasBaseType("Sale.Data.Model.BaseEntity");
 
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
+                    b.HasDiscriminator().HasValue("Category");
                 });
 
             modelBuilder.Entity("Sale.Data.Model.Product", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.HasBaseType("Sale.Data.Model.BaseEntity");
 
                     b.Property<bool>("Active");
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
 
                     b.Property<long>("CategoryId");
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<decimal>("Price");
 
@@ -101,25 +97,14 @@ namespace Sale.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("Id");
-
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.HasDiscriminator().HasValue("Product");
                 });
 
             modelBuilder.Entity("Sale.Data.Model.Sale", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
+                    b.HasBaseType("Sale.Data.Model.BaseEntity");
 
                     b.Property<int>("PaymentType");
 
@@ -127,29 +112,19 @@ namespace Sale.Data.Migrations
 
                     b.Property<string>("UserFullname");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnName("Sale_UserId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Sales");
+                    b.HasDiscriminator().HasValue("Sale");
                 });
 
             modelBuilder.Entity("Sale.Data.Model.User", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
+                    b.HasBaseType("Sale.Data.Model.BaseEntity");
 
                     b.Property<string>("Fullname");
 
                     b.Property<bool>("IsAuthenticate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Password");
 
@@ -157,14 +132,12 @@ namespace Sale.Data.Migrations
 
                     b.Property<string>("Username");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Sale.Data.Model.Product", b =>
                 {
-                    b.HasOne("Sale.Data.Model.Category", "Category")
+                    b.HasOne("Sale.Data.Model.Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -12,37 +12,37 @@ namespace Sale.Service
     }
     public class CartProductService : ICartProductService
     {
-        private readonly IRepository<CartProduct> _cartProductRepo;
+        private readonly IRepository<CartProduct> _cartProductReposiroty;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CartProductService(IRepository<CartProduct> cartProductRepo, IUnitOfWork unitOfWork)
+        public CartProductService(IRepository<CartProduct> cartProductRepository, IUnitOfWork unitOfWork)
         {
-            _cartProductRepo = cartProductRepo;
+            _cartProductReposiroty = cartProductRepository;
             _unitOfWork = unitOfWork;
         }
         public void Add(CartProduct entity)
         {
-            _cartProductRepo.Add(entity);
+            _cartProductReposiroty.Add(entity);
         }
 
         public void Delete(CartProduct entity)
         {
-            _cartProductRepo.Delete(entity);
+            _cartProductReposiroty.Delete(entity);
         }
 
         public void Delete(long id)
         {
-            _cartProductRepo.Delete(id);
+            _cartProductReposiroty.Delete(id);
         }
 
         public CartProduct GetById(long id)
         {
-            return _cartProductRepo.GetById(id);
+            return _cartProductReposiroty.GetById(id);
         }
 
         public IEnumerable<CartProduct> GetCartProducts(long CartId)
         {
-            return _cartProductRepo.Find(x => x.CartId == CartId);
+            return _cartProductReposiroty.Find(x => x.CartId == CartId);
         }
 
         public int SaveChanges()
@@ -52,7 +52,7 @@ namespace Sale.Service
 
         public void Update(CartProduct entity)
         {
-            _cartProductRepo.Update(entity);
+            _cartProductReposiroty.Update(entity);
         }
     }
 }

@@ -1,44 +1,49 @@
-﻿@model Product
+﻿@model AddProductPartial
+@using Sale.WebApp.Models
 
 <form asp-action="AddProduct" method="POST">
     <!-- Product Name & Active -->
     <div class="form-group row">
-        <label asp-for="Title" class="col-sm-2 col-form-label">Adı</label>
+        <label asp-for="product.Title" class="col-sm-2 col-form-label">Adı</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="Name" asp-for="Title" placeholder="Ürün adı">
+            <input type="text" class="form-control" id="Name" asp-for="product.Title" placeholder="Ürün adı">
         </div>
-        <label asp-for="Active" class="col-sm-2 col-form-label">Yayında</label>
+        <label asp-for="product.Active" class="col-sm-2 col-form-label">Yayında</label>
         <div class="col-sm-2">
-            <input type="checkbox" class="form-control" id="Active" asp-for="Active">
+            <input type="checkbox" class="form-control" id="Active" asp-for="product.Active">
         </div>
     </div>
 
     <!-- Product Description -->
     <div class="form-group row">
-        <label asp-for="Description" class="col-sm-2 col-form-label">Açıklaması</label>
+        <label asp-for="product.Description" class="col-sm-2 col-form-label">Açıklaması</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="Description" asp-for="Description" placeholder="Ürün Açıklaması">
+            <input type="text" class="form-control" id="Description" asp-for="product.Description" placeholder="Ürün Açıklaması">
         </div>
     </div>
 
     <!-- Product Stock & Price -->
     <div class="form-group row">
-        <label asp-for="Stock" class="col-sm-2 col-form-label">Stok Adedi</label>
+        <label asp-for="product.Stock" class="col-sm-2 col-form-label">Stok Adedi</label>
         <div class="col-sm-4">
-            <input type="number" class="form-control" id="Stock" asp-for="Stock" placeholder="0">
+            <input type="number" class="form-control" id="Stock" asp-for="product.Stock" placeholder="0">
         </div>
-        <label asp-for="Price" class="col-sm-2 col-form-label">Fiyatı (&#8378;)</label>
+        <label asp-for="product.Price" class="col-sm-2 col-form-label">Fiyatı (&#8378;)</label>
         <div class="col-sm-4">
-            <input type="number" class="form-control" id="Price" asp-for="Price" placeholder="5,99">
+            <input type="number" class="form-control" id="Price" asp-for="product.Price" placeholder="5,99">
         </div>
     </div>
 
     <!-- Product Category -->
     <div class="form-group row">
-        <label asp-for="Category" class="col-sm-2 col-form-label">Kategorisi</label>
+        <label asp-for="product.CategoryId" class="col-sm-2 col-form-label">Kategorisi</label>
         <div class="col-sm-4">
-            <select class="form-control form-control" asp-for="Category" >
+            <select class="form-control form-control" asp-for="product.CategoryId">
                 <option selected="selected" value="">Kategori Seçiniz..</option>
+                @foreach (Category item in Model.categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
         </div>
         <label class="col-sm-2 col-form-label"></label>

@@ -4,7 +4,7 @@ using Sale.Data.Model;
 using Sale.Service;
 using Sale.WebApp.Models;
 
-namespace CrazySale.Controllers
+namespace Sale.WebApp.Controllers
 {
     public class LoginController : Controller
     {

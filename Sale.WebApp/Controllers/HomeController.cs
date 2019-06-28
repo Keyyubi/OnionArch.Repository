@@ -5,7 +5,7 @@ using Sale.WebApp.Models;
 using Sale.Service;
 using Sale.Data.Model;
 
-namespace CrazySale.Controllers
+namespace Sale.WebApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -41,7 +41,8 @@ namespace CrazySale.Controllers
                 return RedirectToAction("Index");
 
             CartProduct crp = new CartProduct();
-            crp.CartId = _cartService.GetUserCart().Id;
+            var UserId = _userService.CurrentUserId();
+            crp.CartId = _cartService.GetUserCart(UserId).Id;
             crp.ProductId = pId;
             crp.OnCartAmount = Amount;
 

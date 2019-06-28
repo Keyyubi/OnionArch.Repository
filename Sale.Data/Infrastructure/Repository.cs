@@ -9,10 +9,10 @@ namespace Sale.Data.Infrastructure
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         // Injection
-        protected readonly DbContext Context;
+        protected readonly ApplicationDbContext Context;
         private DbSet<TEntity> Table;
 
-        public Repository(DbContext _context)
+        public Repository(ApplicationDbContext _context)
         {
             Context = _context;
             Table = Context.Set<TEntity>();

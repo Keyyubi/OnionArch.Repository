@@ -9,40 +9,38 @@ namespace Sale.Service
 {
     public interface ICartService : IServiceBase<Cart>
     {
-        Cart GetUserCart();
+        Cart GetUserCart(long UserId);
     }
 
     public class CartService : ICartService
     {
-        private IRepository<Cart> _cartRepo;
+        private IRepository<Cart> _cartReposiroty;
         private IUnitOfWork _unitOfWork;
-        private IUserService _userService;
 
-        public CartService(IRepository<Cart> cartRepo, IUnitOfWork unitOfWork, IUserService userService)
+        public CartService(IRepository<Cart> cartRepository, IUnitOfWork unitOfWork)
         {
-            _cartRepo = cartRepo;
+            _cartReposiroty = cartRepository;
             _unitOfWork = unitOfWork;
-            _userService = userService;
         }
 
         public void Add(Cart cart)
         {
-            _cartRepo.Add(cart);
+            _cartReposiroty.Add(cart);
         }
 
         public Cart GetById(long id)
         {
-            return _cartRepo.GetById(id);
+            return _cartReposiroty.GetById(id);
         }
 
         public IEnumerable<Cart> GetAll()
         {
-            return _cartRepo.GetAll();
+            return _cartReposiroty.GetAll();
         }
 
         public void Update(Cart cart)
         {
-            _cartRepo.Update(cart);
+            _cartReposiroty.Update(cart);
         }
 
         public void Delete(Cart entity)
@@ -52,23 +50,18 @@ namespace Sale.Service
 
         public void Delete(long id)
         {
-            _cartRepo.Delete(id);
+            _cartReposiroty.Delete(id);
         }
 
 
-        public Cart GetUserCart()
+        public Cart GetUserCart(long UserId)
         {
-            long UserId = _userService.CurrentUserId();
-            
-            if (UserId == -1)
-                return null;
-
-            var obj = _cartRepo.Get(x => x.UserId == UserId);
+            var obj = _cartReposiroty.Get(x => x.UserId == UserId);
 
             if (obj == null)
             {
-                _cartRepo.Add(new Cart { UserId = UserId });
-                obj = _cartRepo.Get(x => x.UserId == UserId);
+                _cartReposiroty.Add(new Cart { UserId = UserId });
+                obj = _cartReposiroty.Get(x => x.UserId == UserId);
             }
 
             return obj;

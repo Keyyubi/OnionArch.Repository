@@ -8,7 +8,7 @@ using Sale.Data.Model;
 using Sale.Service;
 using Sale.WebApp.Models;
 
-namespace CrazySale.Controllers
+namespace Sale.WebApp.Controllers
 {
     public class CartController : Controller
     {
@@ -31,7 +31,8 @@ namespace CrazySale.Controllers
 
             ViewData["ErrorMsg"] = msg;
             ViewData["SuccessInfo"] = scsMsg;
-            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart().Id);
+            long UserId = _userService.CurrentUserId();
+            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart(UserId).Id);
 
             if(model == null || model.LongCount<CartProduct>() == 0)
                 return RedirectToAction("Index", "Home", new { msg="Sepetinizde hiç ürün yok."});

@@ -17,49 +17,49 @@ namespace Sale.Service
 
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product> _productRepo;
+        private readonly IRepository<Product> _productRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductService(IRepository<Product> productRepo, IUnitOfWork unitOfWork)
+        public ProductService(IRepository<Product> productRepository, IUnitOfWork unitOfWork)
         {
-            _productRepo = productRepo;
+            _productRepository = productRepository;
             _unitOfWork = unitOfWork;
         }
 
         public void Add(Product product)
         {
-            _productRepo.Add(product);
+            _productRepository.Add(product);
         }
 
         public Product GetById(long id)
         {
-            return _productRepo.GetById(id);
+            return _productRepository.GetById(id);
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _productRepo.GetAll();
+            return _productRepository.GetAll();
         }
 
         public void Update(Product product)
         {
-            _productRepo.Update(product);
+            _productRepository.Update(product);
         }
 
         public void Delete(long id)
         {
-            _productRepo.Delete(id);
+            _productRepository.Delete(id);
         }
 
         public void Delete(Product p)
         {
-            _productRepo.Delete(p);
+            _productRepository.Delete(p);
         }
         
         public IEnumerable<Product> GetOnSaleProducts()
         {
             // ?? Should this query be in Repository layer?
-            return _productRepo.Find(x => x.Active == true);
+            return _productRepository.Find(x => x.Active == true);
         }
 
         public int SaveChanges()
@@ -69,7 +69,7 @@ namespace Sale.Service
 
         public Product Get(Expression<Func<Product, bool>> where)
         {
-            return _productRepo.Get(where);
+            return _productRepository.Get(where);
         }
     }
 }

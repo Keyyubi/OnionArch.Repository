@@ -21,7 +21,6 @@ namespace Sale.Data.Infrastructure
             try
             {
                 return Context.SaveChanges();
-
             }
             catch (Exception ex)
             {

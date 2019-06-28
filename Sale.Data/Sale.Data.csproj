@@ -9,6 +9,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="Migrations\20190627134829_FirstMig.cs" />
+    <Compile Remove="Migrations\20190627134829_FirstMig.Designer.cs" />
+    <Compile Remove="Migrations\20190628085929_Initial.cs" />
+    <Compile Remove="Migrations\20190628085929_Initial.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />

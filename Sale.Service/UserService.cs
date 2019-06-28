@@ -15,18 +15,18 @@ namespace Sale.Service
     }
     public class UserService : IUserService
     {
-        private IRepository<User> _userRepo;
+        private IRepository<User> _userRepository;
         private IUnitOfWork _unitOfWork;
         private static User _currentUser { get; set; }
 
-        public UserService(IRepository<User> userRepo, IUnitOfWork unitOfWork, ICartService cartService)
+        public UserService(IRepository<User> userRepository, IUnitOfWork unitOfWork)
         {
-            _userRepo = userRepo;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
         public void Add(User entity)
         {
-            _userRepo.Add(entity);
+            _userRepository.Add(entity);
         }
 
         public User CurrentUser()
@@ -36,26 +36,26 @@ namespace Sale.Service
 
         public void Delete(User entity)
         {
-            _userRepo.Delete(entity);
+            _userRepository.Delete(entity);
         }
 
         public void Delete(long id)
         {
-            _userRepo.Delete(id);
+            _userRepository.Delete(id);
         }
 
         public User GetById(long id)
         {
-            return _userRepo.GetById(id);
+            return _userRepository.GetById(id);
         }
 
         public bool Login(User user)
         {
-            User check = _userRepo.Get(x => x.Username == user.Username);
+            User check = _userRepository.Get(x => x.Username == user.Username);
             if (check != null && check.Password.Equals(user.Password))
             {
                 check.IsAuthenticate = true;
-                _userRepo.Update(check);
+                _userRepository.Update(check);
                 _currentUser = check;
                 return true;
             }
@@ -75,7 +75,7 @@ namespace Sale.Service
 
         public void Update(User entity)
         {
-            _userRepo.Update(entity);
+            _userRepository.Update(entity);
         }
 
         public long CurrentUserId()
