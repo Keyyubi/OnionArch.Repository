@@ -19,9 +19,6 @@
     <ProjectReference Include="..\Sale.Service\Sale.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="Views\Product\Index.cshtml" />
-    <Content Remove="Views\Product\AddProductPartial.cshtml" />
-    <Content Remove="Views\Product\Index.cshtml" />
-    <Content Remove="Views\Product\UpdateProduct.cshtml" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-@model ProductViewModel
+﻿@model ProductViewModel
 
 @{
     ViewData["Title"] = "Manage Products";
@@ -30,7 +30,7 @@
       @foreach (var item in Model.Products)
       {
           <tr id="currentProduct">
-              <td>@item.Name</td>
+              <td>@item.Title</td>
               <td>@item.Description</td>
               <td>@item.Price</td>
               <td>@item.Stock</td>
@@ -43,12 +43,12 @@
                     class="btn btn-outline-success"
                     data-toggle="modal" 
                     data-target="#addToChart" 
-                    data-pId="@item.ID"
+                    data-pId="@item.Id"
                     data-maxv="@item.Stock"
                     >Sepete Ekle</button>
               </td>
               <td>
-                <form asp-action="RouteUpdateProduct" asp-route-pId="@item.ID">
+                <form asp-action="RouteUpdateProduct" asp-route-pId="@item.Id">
                   <button type="submit" class="btn btn-outline-warning">Güncelle</button>
                 </form>
               </td>
@@ -57,8 +57,8 @@
                     class="btn btn-outline-danger" 
                     data-toggle="modal" 
                     data-target="#deleteModal" 
-                    data-pId="@item.ID" 
-                    data-pName="@item.Name"
+                    data-pId="@item.Id" 
+                    data-pName="@item.Title"
                   >Sil</button>
               </td>
           </tr>
@@ -72,7 +72,7 @@
       <h5>Yeni Ürün Ekle</h5>
     </div>
     <div class="card-body">
-      @await Html.PartialAsync("AddProductPartial", new Product())
+      @await Html.PartialAsync("AddProductPartial", new Sale.Data.Model.Product())
     </div>
   </div>
 </div>
@@ -132,4 +132,3 @@
     </div>
   </div>
 </div>
-

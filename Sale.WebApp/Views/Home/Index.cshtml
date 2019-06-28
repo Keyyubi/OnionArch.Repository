@@ -1,4 +1,5 @@
 ﻿@model ProductViewModel
+@using Sale.WebApp.Models
 
 @{
     ViewData["Title"] = "Anasayfa";
@@ -47,11 +48,11 @@
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top prd-card-img" width="300px" src="~/lib/img/box.png" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
+                        <h5 class="card-title">@item.Title</h5>
                         <span class="card-text">@item.Description</span>
                         <br>
                         <small>Stok:</small> <small>@item.Stock</small>
-                        <form asp-action="AddProductToChart" asp-route-pId="@item.ID" method="POST">
+                        <form asp-action="AddProductToChart" asp-route-pId="@item.Id" method="POST">
                             <div class="form-group row">
                                 <label for="Amount" class="col-sm-4 col-form-label">Adet</label>
                                 <div class="col-sm-4">

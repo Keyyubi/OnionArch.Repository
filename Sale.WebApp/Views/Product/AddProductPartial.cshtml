@@ -1,11 +1,11 @@
-@model Product
+﻿@model Product
 
 <form asp-action="AddProduct" method="POST">
     <!-- Product Name & Active -->
     <div class="form-group row">
-        <label asp-for="Name" class="col-sm-2 col-form-label">Adı</label>
+        <label asp-for="Title" class="col-sm-2 col-form-label">Adı</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Ürün adı">
+            <input type="text" class="form-control" id="Name" asp-for="Title" placeholder="Ürün adı">
         </div>
         <label asp-for="Active" class="col-sm-2 col-form-label">Yayında</label>
         <div class="col-sm-2">
@@ -37,7 +37,7 @@
     <div class="form-group row">
         <label asp-for="Category" class="col-sm-2 col-form-label">Kategorisi</label>
         <div class="col-sm-4">
-            <select class="form-control form-control" asp-for="Category" asp-items="Html.GetEnumSelectList<Categories>()" >
+            <select class="form-control form-control" asp-for="Category" >
                 <option selected="selected" value="">Kategori Seçiniz..</option>
             </select>
         </div>

@@ -1,31 +1,35 @@
-@model ChartViewModel
+﻿@model CartViewModel
+@using Sale.WebApp.Models
 
 @{
     ViewData["Title"] = "Sepet";
 }
 
-<style> 
+<style>
     .prd-card-img {
         transform: scale(0.7);
         background-color: #f7f7f7;
         border-radius: 50%;
     }
-    .card img{
-        max-width:100%;
-        height:auto;
+
+    .card img {
+        max-width: 100%;
+        height: auto;
         object-fit: none;
     }
+
     .chart {
         position: absolute;
         right: 0;
         width: 20vw;
         height: 80vh;
         background-color: #f7f7f7;
-        border:1px solid #ccc;
+        border: 1px solid #ccc;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         overflow-y: auto;
     }
+
     .chart-header {
         justify-content: center;
         border-bottom: 1px solid #ccc;
@@ -34,47 +38,47 @@
 </style>
 
 <div class="container">
-    <div class="row d-flex mb-4 chart-header">  
+    <div class="row d-flex mb-4 chart-header">
         <h2>@ViewData["Title"]</h2>
         <span class="text-danger" style="position: absolute; right: 5%;">@ViewData["ErrorMsg"]</span>
         <span class="text-success" style="position: absolute; right: 5%;">@ViewData["SuccessInfo"]</span>
     </div>
-        @for (int i = 0; i < Model.Products.Count; i++)
-        {
-            var item = Model.Products[i];
-            <div class="row">
-                <div class="col-3">
-                    <img class="card-img-top prd-card-img" width="150px" src="~/lib/img/box.png" alt="Card image cap">
+    @for (int i = 0; i < Model.Products.Count; i++)
+    {
+        var item = Model.Products[i];
+        <div class="row">
+            <div class="col-3">
+                <img class="card-img-top prd-card-img" width="150px" src="~/lib/img/box.png" alt="Card image cap">
+            </div>
+            <div class="col-3 pt-4">
+                <div class="form-group">
+                    <label for="Name">Ürün Adı</label>
+                    <input type="text" class="form-control" id="Name" name="Name" readonly value="@item.Title">
                 </div>
-                <div class="col-3 pt-4">
-                    <div class="form-group">
-                        <label for="Name">Ürün Adı</label>
-                        <input type="text" class="form-control" id="Name" name="Name" readonly value="@item.Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="Description">Ürün Açıklaması</label>
-                        <input type="text" class="form-control" id="Description" name="Description" readonly value="@item.Description">
-                    </div>
-                    
+                <div class="form-group">
+                    <label for="Description">Ürün Açıklaması</label>
+                    <input type="text" class="form-control" id="Description" name="Description" readonly value="@item.Description">
                 </div>
-                <div class="col-3 pt-4">
-                    <div class="form-group">
-                        <label for="Name">Ürün Fiyatı (&#8378;)</label>
-                        <input type="text" class="form-control" id="Name" name="Name" readonly value="@item.Price">
-                    </div>
-                    <div class="form-group">
-                        <label for="Description">Sipariş Adedi</label>
-                        <input type="text" class="form-control" id="Description" name="Description" readonly value="@Model.ProductAmountsOnCart[i]">
-                    </div>
+
+            </div>
+            <div class="col-3 pt-4">
+                <div class="form-group">
+                    <label for="Name">Ürün Fiyatı (&#8378;)</label>
+                    <input type="text" class="form-control" id="Name" name="Name" readonly value="@item.Price">
                 </div>
-                <div class="col-3 d-flex justify-content-center align-items-center">
-                    <form asp-action="DeleteFromCart" asp-route-pId="@item.ID">
-                        <button type="submit" class="btn btn-danger">Sepetten Çıkar</button>
-                    </form>
+                <div class="form-group">
+                    <label for="Description">Sipariş Adedi</label>
+                    <input type="text" class="form-control" id="Description" name="Description" readonly value="@Model.ProductAmountsOnCart[i]">
                 </div>
             </div>
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <form asp-action="DeleteFromCart" asp-route-pId="@item.Id">
+                    <button type="submit" class="btn btn-danger">Sepetten Çıkar</button>
+                </form>
+            </div>
+        </div>
         <hr>
-        }
+    }
     <form asp-action="CompleteSale" asp-route-Total="@Model.TotalPrice">
         <div class="form-group row pr-3">
             <label for="Total" class="col-sm-4 col-form-label text-right">Toplam Tutar:</label>

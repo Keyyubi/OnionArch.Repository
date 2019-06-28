@@ -22,8 +22,8 @@ namespace CrazySale
         }
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
-            if(!_userService.CurrentUser().IsAuthenticate)
-                return RedirectToAction("Index", "Login", new { msg="Giriş yapmalısınız."});
+            //if(!_userService.CurrentUser().IsAuthenticate)
+            //    return RedirectToAction("Index", "Login", new { msg="Giriş yapmalısınız."});
             
             ViewData["ErrorMsg"] = msg;
             ViewData["SuccessInfo"] = scsMsg;
