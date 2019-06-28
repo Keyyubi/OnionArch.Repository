@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sale.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class LastMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace Sale.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AddedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 6, 28, 13, 14, 57, 222, DateTimeKind.Local).AddTicks(9440)),
-                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 6, 28, 13, 14, 57, 224, DateTimeKind.Local).AddTicks(4885)),
+                    AddedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 6, 28, 16, 56, 50, 953, DateTimeKind.Local).AddTicks(4676)),
+                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 6, 28, 16, 56, 50, 954, DateTimeKind.Local).AddTicks(8589)),
                     AddedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
@@ -27,7 +27,7 @@ namespace Sale.Data.Migrations
                     Price = table.Column<decimal>(nullable: true),
                     Active = table.Column<bool>(nullable: true),
                     CategoryId = table.Column<long>(nullable: true),
-                    Sale_UserId = table.Column<int>(nullable: true),
+                    Sale_UserId = table.Column<long>(nullable: true),
                     UserFullname = table.Column<string>(nullable: true),
                     TotalPrice = table.Column<decimal>(nullable: true),
                     PaymentType = table.Column<int>(nullable: true),
@@ -52,7 +52,7 @@ namespace Sale.Data.Migrations
                 name: "CartProducts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CartId = table.Column<long>(nullable: false),
                     ProductId = table.Column<long>(nullable: false),
@@ -60,7 +60,7 @@ namespace Sale.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartProducts", x => x.ID);
+                    table.PrimaryKey("PK_CartProducts", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(

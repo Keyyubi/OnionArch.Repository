@@ -34,27 +34,22 @@ namespace Sale.WebApp.Controllers
             var model = new ProductViewModel() { Products = items };
             return View(model);
         }
-        
+
         public IActionResult AddProductToChart(int Amount, long pId)
         {
-            if(Amount == 0)
+            if (Amount == 0)
                 return RedirectToAction("Index");
 
             CartProduct crp = new CartProduct();
-            //long UserId = _userService.CurrentUserId();
-            crp.CartId = _cartService.GetUserCart(UserService.CurrentUser.Id).Id;
+            crp.CartId = _cartService.GetUserCart().Id;
             crp.ProductId = pId;
             crp.OnCartAmount = Amount;
 
-            try
-            {
-                _cartProductService.Add(crp);
+            _cartProductService.Add(crp);
+            if (_cartProductService.SaveChanges() != 0)
                 return RedirectToAction("Index", new { scsMsg = "Ürün başarılı bir şekilde sepete eklendi." });
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Index", new { scsMsg = "Ürün eklenirken bir hata oluştu." });
-            }
+            else
+                return RedirectToAction("Index", new { msg = "Ürün eklenirken bir hata oluştu." });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

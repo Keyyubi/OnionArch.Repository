@@ -8,7 +8,7 @@ namespace Sale.Service
 {
     public interface ISaleService : IServiceBase<Sale.Data.Model.Sale>
     {
-
+        void CompleteShopping(decimal Total);
     }
     public class SaleService : ISaleService
     {
@@ -23,6 +23,18 @@ namespace Sale.Service
         public void Add(Data.Model.Sale entity)
         {
             _saleRepository.Add(entity);
+        }
+
+        public void CompleteShopping(decimal Total)
+        {
+            _saleRepository.Add(new Data.Model.Sale
+            {
+                UserId = UserService.CurrentUser.Id,
+                UserFullname = UserService.CurrentUser.Fullname,
+                AddedDate = DateTime.Now,
+                PaymentType = PaymentTypes.Cash,
+                TotalPrice = Total
+            });
         }
 
         public void Delete(Data.Model.Sale entity)

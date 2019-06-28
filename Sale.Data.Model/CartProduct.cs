@@ -6,7 +6,7 @@ namespace Sale.Data.Model
         public CartProduct()
         {
         }
-        public int ID { get; set; }
+        public long Id { get; set; }
         public long CartId { get; set; }
         public long ProductId { get; set; }
         public int OnCartAmount { get; set; }

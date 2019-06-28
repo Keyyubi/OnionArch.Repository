@@ -16,13 +16,15 @@ namespace Sale.WebApp.Controllers
         private readonly ICartService _cartService;
         private readonly ICartProductService _cartProductService;
         private readonly IUserService _userService;
-
-        public CartController(IProductService productService, ICartService cartService, IUserService userService, ICartProductService cartProductService)
+        private readonly ISaleService _saleService;
+        public CartController(IProductService productService, ICartService cartService, IUserService userService, ICartProductService cartProductService, ISaleService saleService)
         {
             _productService = productService;
             _cartService = cartService;
             _userService = userService;
             _cartProductService = cartProductService;
+            _saleService = saleService;
+            
         }
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
@@ -31,13 +33,14 @@ namespace Sale.WebApp.Controllers
 
             ViewData["ErrorMsg"] = msg;
             ViewData["SuccessInfo"] = scsMsg;
-            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart(UserService.CurrentUser.Id).Id);
+            var model = _cartProductService.GetCartProducts(_cartService.GetUserCart().Id);
+
+            CartViewModel cvm = new CartViewModel();
 
             if(model == null || model.LongCount<CartProduct>() == 0)
                 return RedirectToAction("Index", "Home", new { msg="Sepetinizde hiç ürün yok."});
             else
             {
-                CartViewModel cvm = new CartViewModel();
                 cvm.ProductAmountsOnCart = new List<int>();
                 cvm.Products = new List<Product>();
                 cvm.TotalPrice = 0;
@@ -50,31 +53,27 @@ namespace Sale.WebApp.Controllers
                     cvm.Products.Add(p);
                 }
             }
-
-            return View();//model);
+            
+            return View(cvm);
         }
         
-        public IActionResult DeleteFromCart(Guid pId)
+        public IActionResult DeleteFromCart(long pId)
         {
-            //var result = await _CartService.DeleteProductFromCart(pId);
+            _cartProductService.Delete(pId);
 
-            //if(!result)
-            //    return RedirectToAction("Index", new { msg="Bir hata oluştu."});
-            //else
-            //    return RedirectToAction("Index", new { msg="Ürün sepetten çıkarıldı."});
-
-            return View();
+            if (_cartService.SaveChanges() == 0)
+                return RedirectToAction("Index", new { msg = "Bir hata oluştu." });
+            else
+                return RedirectToAction("Index", new { msg = "Ürün sepetten çıkarıldı." });
         }
 
         public IActionResult CompleteSale(decimal Total)
         {
-            //var result = await _CartService.CompleteShopping(Total);
-            //if(result)
-            //    return RedirectToAction("Index", "Home", new { scsMsg="Alışverişiniz tamamlandı."});
-            //else
-            //    return RedirectToAction("Index", new { Msg="Alışveriş tamamlanamadı."});            
-
-            return View();
+            _saleService.CompleteShopping(Total);
+            if (_saleService.SaveChanges() != 0)
+                return RedirectToAction("Index", "Home", new { scsMsg = "Alışverişiniz tamamlandı." });
+            else
+                return RedirectToAction("Index", new { Msg = "Alışveriş tamamlanamadı." });
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

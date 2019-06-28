@@ -15,13 +15,15 @@ namespace Sale.WebApp
         private readonly IUserService _userService;
         private readonly ICartService _cartService;
         private readonly ICategoryService _categoryService;
+        private readonly ICartProductService _cartProductService;
 
-        public ProductController(IProductService productService, IUserService userService, ICartService cartService, ICategoryService categoryService)
+        public ProductController(IProductService productService, IUserService userService, ICartService cartService, ICategoryService categoryService, ICartProductService cartProductService)
         {
             _productService = productService;
             _userService = userService;
             _cartService = cartService;
             _categoryService = categoryService;
+            _cartProductService = cartProductService;
         }
         public IActionResult Index(string msg = null, string scsMsg = null)
         {
@@ -99,19 +101,19 @@ namespace Sale.WebApp
             ViewBag.Categories = _categoryService.GetAll();
             return View("UpdateProduct",model);
         }
-        /*
+
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddProductToChart(int Amount, Guid pId)
+        public IActionResult AddProductToChart(int Amount, long pId)
         {
             if(Amount == 0)
                 return RedirectToAction("Index");
             
-            var result = await _chartService.AddProductToChartAsync(pId,Amount);
-            if(result)
+            _cartProductService.Add(new CartProduct { CartId=_cartService.GetUserCart().Id, ProductId = pId, OnCartAmount = Amount });
+
+            if(_cartProductService.SaveChanges() != 0)
                 return RedirectToAction("Index", new { scsMsg="Ürün başarılı bir şekilde sepete eklendi."});
             
             return RedirectToAction("Index", new { scsMsg="Ürün eklenirken bir hata oluştu."});
         }
-        */
     }
 }

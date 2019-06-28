@@ -9,8 +9,8 @@ using Sale.Data;
 namespace Sale.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190628101457_Initial")]
-    partial class Initial
+    [Migration("20190628135651_LastMig")]
+    partial class LastMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace Sale.Data.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 6, 28, 13, 14, 57, 222, DateTimeKind.Local).AddTicks(9440));
+                        .HasDefaultValue(new DateTime(2019, 6, 28, 16, 56, 50, 953, DateTimeKind.Local).AddTicks(4676));
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
@@ -36,7 +36,7 @@ namespace Sale.Data.Migrations
 
                     b.Property<DateTime>("ModifiedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 6, 28, 13, 14, 57, 224, DateTimeKind.Local).AddTicks(4885));
+                        .HasDefaultValue(new DateTime(2019, 6, 28, 16, 56, 50, 954, DateTimeKind.Local).AddTicks(8589));
 
                     b.HasKey("Id");
 
@@ -47,7 +47,7 @@ namespace Sale.Data.Migrations
 
             modelBuilder.Entity("Sale.Data.Model.CartProduct", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<long>("CartId");
@@ -56,7 +56,7 @@ namespace Sale.Data.Migrations
 
                     b.Property<long>("ProductId");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("CartProducts");
                 });
@@ -112,7 +112,7 @@ namespace Sale.Data.Migrations
 
                     b.Property<string>("UserFullname");
 
-                    b.Property<int>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnName("Sale_UserId");
 
                     b.HasDiscriminator().HasValue("Sale");

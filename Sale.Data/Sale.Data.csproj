@@ -13,6 +13,10 @@
     <Compile Remove="Migrations\20190627134829_FirstMig.Designer.cs" />
     <Compile Remove="Migrations\20190628085929_Initial.cs" />
     <Compile Remove="Migrations\20190628085929_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190628101457_Initial.cs" />
+    <Compile Remove="Migrations\20190628101457_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190628130439_LastMig.cs" />
+    <Compile Remove="Migrations\20190628130439_LastMig.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
